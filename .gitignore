@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+apps/*/node_modules/
+
+# env
+.env
+apps/*/.env
+!.env.example
+!apps/*/.env.example
+
+# build output
+dist/
+apps/*/dist/
+apps/frontend/dist/
+
+# logs
+*.log
+npm-debug.log*
+
+# editor / os
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,20 @@
+{
+  "name": "hubspot-oauth-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HubSpot public app with OAuth flow, Neon Postgres token storage, and CRM Contacts fetch",
+  "workspaces": [
+    "apps/backend",
+    "apps/frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,magenta \"npm run dev -w apps/backend\" \"npm run dev -w apps/frontend\"",
+    "dev:backend": "npm run dev -w apps/backend",
+    "dev:frontend": "npm run dev -w apps/frontend",
+    "build": "npm run build -w apps/backend && npm run build -w apps/frontend",
+    "start:backend": "npm run start -w apps/backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
