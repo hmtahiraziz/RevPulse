@@ -8,13 +8,15 @@
     "apps/frontend"
   ],
   "scripts": {
-    "dev": "concurrently -n backend,frontend -c blue,magenta \"npm run dev -w apps/backend\" \"npm run dev -w apps/frontend\"",
-    "dev:backend": "npm run dev -w apps/backend",
-    "dev:frontend": "npm run dev -w apps/frontend",
-    "build": "npm run build -w apps/backend && npm run build -w apps/frontend",
-    "start:backend": "npm run start -w apps/backend"
+    "dev": "node init && concurrently -n backend,frontend -c blue,magenta \"npm run dev -w apps/backend\" \"npm run dev -w apps/frontend\"",
+    "dev:backend": "node init && npm run dev -w apps/backend",
+    "dev:frontend": "node init && npm run dev -w apps/frontend",
+    "build": "node init && npm run build -w apps/backend && npm run build -w apps/frontend",
+    "start:backend": "node init && npm run start -w apps/backend"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0"
+    "concurrently": "^9.1.0",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2"
   }
 }
