@@ -1,19 +1,40 @@
 # HubSpot OAuth App
 
-A TypeScript monorepo that implements the HubSpot public-app OAuth flow, stores
-per-portal tokens in Neon Postgres, and uses them to fetch CRM Contacts.
+A TypeScript monorepo that connects HubSpot CRM accounts via OAuth and turns
+that data into a practical sales & revenue dashboard — with optional Stripe
+enrichment.
+
+## What this project is about
+
+HubSpot holds contacts and deals; Stripe holds who actually pays. Teams often
+look at those systems separately, so CRM records go stale, paying customers
+never land in HubSpot, and pipeline numbers don’t map to real revenue.
+
+This app is a small multi-tenant HubSpot public app that:
+
+1. **Connects** one or more HubSpot portals with the standard OAuth install flow
+2. **Surfaces CRM health** — contacts bucketed by freshness, plus a Data Health
+   audit for missing fields and duplicate records
+3. **Shows the sales pipeline** — open deal value, stage funnel, weighted
+   forecast, and win rate
+4. **Joins Stripe (optional)** — matches customers by email to highlight lifetime
+   revenue, paying contacts, revenue leaks (paying but not in HubSpot), ghost
+   contacts (in HubSpot but never paid), and churn risk
+
+In short: connect HubSpot once, then use one UI to check data quality, pipeline,
+and (when Stripe is configured) where revenue and CRM disagree.
 
 - **Backend** (`apps/backend`) — Node + Express + TypeScript. Owns the OAuth
-  handshake, token storage/refresh, and a proxy endpoint for HubSpot data.
-- **Frontend** (`apps/frontend`) — React + Vite + TypeScript. A simple UI to
-  connect a HubSpot account and view fetched contacts.
+  handshake, token storage/refresh, and HubSpot/Stripe API proxies.
+- **Frontend** (`apps/frontend`) — React + Vite + TypeScript. Tabs for Contacts,
+  Data Health, Sales Pipeline, and Revenue Intelligence.
 
 ## Architecture
 
 ```
 apps/
-  backend/    Express API: /api/auth/install, /oauth-callback, /api/contacts, /api/portals
-  frontend/   React app: Connect button + contacts table
+  backend/    Express API: OAuth, contacts, deals, audit, revenue / revenue-intel
+  frontend/   React app: Connect HubSpot + Contacts / Data Health / Pipeline / Rev Intel tabs
 ```
 
 Tokens are keyed by HubSpot `portal_id` (hub id), so multiple HubSpot accounts
